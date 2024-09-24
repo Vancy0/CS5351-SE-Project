@@ -1,5 +1,5 @@
 <p align="center">
-	<img alt="logo" src="https://www.bing.com/images/search?q=edg%20logo&FORM=IQFRBA&id=5037A098ADDA12F395FA555E2BBC7E88174C210D">
+	<img alt="logo" src="https://en.wikipedia.org/wiki/File:Edward_Gaming_logo.png">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi v3.8.8</h1>
 <h4 align="center">基于SpringBoot+Vue前后端分离的Java快速开发框架</h4>
