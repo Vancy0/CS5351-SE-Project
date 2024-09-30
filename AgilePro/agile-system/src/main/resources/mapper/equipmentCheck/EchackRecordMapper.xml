@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agile.equipmentCheck.mapper.EchackRecordMapper">
+    
+    <resultMap type="EchackRecord" id="EchackRecordResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="checkContent"    column="check_content"    />
+        <result property="checkId"    column="check_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="checkStatus"    column="check_status"    />
+        <association property="echeckInfo"    column="check_id" javaType="EcheckInfo" resultMap="CheckResult" />
+    </resultMap>
+
+    <resultMap id="CheckResult" type="EcheckInfo">
+        <result property="checkNo" column="check_no"></result>
+        <result property="userName" column="user_name"></result>
+        <result property="checkPosition" column="check_position"></result>
+    </resultMap>
+
+    <sql id="selectEchackRecordVo">
+        select record_id, check_content, r.check_id, r.create_by, r.create_time, r.update_by, r.update_time, check_status,
+               i.check_no,i.user_name,i.check_position
+        from echack_record as r
+            left join echeck_info as i on r.check_id = i.check_id
+    </sql>
+
+    <select id="selectEchackRecordList" parameterType="EchackRecord" resultMap="EchackRecordResult">
+        <include refid="selectEchackRecordVo"/>
+        <where>  
+            <if test="checkContent != null  and checkContent != ''"> and check_content = #{checkContent}</if>
+            <if test="checkId != null "> and check_id = #{checkId}</if>
+            <if test="checkStatus != null  and checkStatus != ''"> and check_status = #{checkStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectEchackRecordByRecordId" parameterType="Long" resultMap="EchackRecordResult">
+        <include refid="selectEchackRecordVo"/>
+        where record_id = #{recordId}
+    </select>
+
+    <select id="selectEchackRecordByCheckId" parameterType="Long" resultMap="EchackRecordResult">
+        <include refid="selectEchackRecordVo"/>
+        where check_id = #{checkId}
+    </select>
+        
+    <insert id="insertEchackRecord" parameterType="EchackRecord" useGeneratedKeys="true" keyProperty="recordId">
+        insert into echack_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="checkContent != null">check_content,</if>
+            <if test="checkId != null">check_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="checkStatus != null">check_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="checkContent != null">#{checkContent},</if>
+            <if test="checkId != null">#{checkId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="checkStatus != null">#{checkStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEchackRecord" parameterType="EchackRecord">
+        update echack_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="checkContent != null">check_content = #{checkContent},</if>
+            <if test="checkId != null">check_id = #{checkId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="checkStatus != null">check_status = #{checkStatus},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteEchackRecordByRecordId" parameterType="Long">
+        delete from echack_record where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteEchackRecordByRecordIds" parameterType="String">
+        delete from echack_record where record_id in 
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+</mapper>

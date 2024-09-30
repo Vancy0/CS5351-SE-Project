@@ -3,7 +3,7 @@ package com.agile.system.domain;
 /**
  * 当前在线会话
  * 
- * @author ruoyi
+ * @author agile
  */
 public class SysUserOnline
 {

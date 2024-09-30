@@ -6,7 +6,7 @@ import com.agile.system.domain.SysNotice;
 /**
  * 公告 服务层
  * 
- * @author ruoyi
+ * @author agile
  */
 public interface ISysNoticeService
 {

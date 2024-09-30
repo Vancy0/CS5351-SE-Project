@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agile.equipmentCheck.mapper.EquipmentMapper">
+
+    <resultMap type="Equipment" id="EquipmentResult">
+        <id     property="equipmentId"      column="equipment_id"      />
+        <result property="equipmentNo"    column="equipment_no"    />
+        <result property="equipmentName"     column="equipment_name"     />
+        <result property="equipmentType"   column="equipment_type"   />
+        <result property="createBy"      column="create_by"      />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"      column="update_by"      />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEquipmentVo">
+        select equipment_id, equipment_no, equipment_name, equipment_type,  create_by, create_time, update_by, update_time
+        from echeck_equipment
+    </sql>
+
+    <select id="selectEquipmentList" parameterType="Equipment" resultMap="EquipmentResult">
+        <include refid="selectEquipmentVo"/>
+        <where>
+            <if test="equipmentNo != null and equipmentNo != ''">
+                AND equipment_no like concat('%', #{equipmentNo}, '%')
+            </if>
+            <if test="equipmentName != null and equipmentName != ''">
+                AND equipment_name like concat('%', #{equipmentName}, '%')
+            </if>
+            <if test="equipmentType != null and equipmentType != ''">
+                AND equipment_type like concat('%', #{equipmentType}, '%')
+            </if>
+            AND del_flag = '0'
+        </where>
+    </select>
+
+    <select id="selectEquipmentDetailById" parameterType="Long" resultMap="EquipmentResult">
+        <include refid="selectEquipmentVo"/>
+        <where>
+            equipment_id = #{id}
+            AND del_flag = '0'
+        </where>
+    </select>
+
+    <insert id="insertEquipment" parameterType="Equipment">
+        insert into echeck_equipment (
+        <if test="equipmentNo != null and equipmentNo != '' ">equipment_no,</if>
+        <if test="equipmentName != null and equipmentName != '' ">equipment_name,</if>
+        <if test="equipmentType != null and equipmentType != '' ">equipment_type,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )values(
+        <if test="equipmentNo != null and equipmentNo != ''">#{equipmentNo},</if>
+        <if test="equipmentName != null and equipmentName != ''">#{equipmentName},</if>
+        <if test="equipmentType != null and equipmentType != ''">#{equipmentType},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateEquipment" parameterType="Equipment">
+        update echeck_equipment
+        <set>
+            <if test="equipmentNo != null and equipmentNo != ''">equipment_no = #{equipmentNo},</if>
+            <if test="equipmentName != null and equipmentName != ''">equipment_name = #{equipmentName},</if>
+            <if test="equipmentType != null and equipmentType != ''">equipment_type = #{equipmentType},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where equipment_id = #{equipmentId}
+    </update>
+
+    <select id="checkEquipmentNoUnique" parameterType="Equipment" resultMap="EquipmentResult">
+        <include refid="selectEquipmentVo"/>
+         where equipment_no = #{equipmentNo} AND del_flag = '0' limit 1
+    </select>
+
+    <select id="checkNameTypeUnique" parameterType="Equipment" resultMap="EquipmentResult">
+        <include refid="selectEquipmentVo"/>
+        <where>
+            AND del_flag = '0'
+            AND equipment_name = #{equipmentName}
+            <if test="equipmentType != null and equipmentType != ''">
+                AND equipment_type = #{equipmentType}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+    <update id="deleteEquipment" parameterType="Long">
+        update echeck_equipment
+        <set>
+            del_flag = '2'
+        </set>
+        where equipment_id = #{equipmentId}
+    </update>
+
+</mapper>

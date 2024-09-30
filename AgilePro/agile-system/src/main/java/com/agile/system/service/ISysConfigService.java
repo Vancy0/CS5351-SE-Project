@@ -6,7 +6,7 @@ import com.agile.system.domain.SysConfig;
 /**
  * 参数配置 服务层
  * 
- * @author ruoyi
+ * @author agile
  */
 public interface ISysConfigService
 {

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agile.equipmentCheck.mapper.EcheckInfoMapper">
+    
+    <resultMap type="EcheckInfo" id="EcheckInfoResult">
+        <result property="checkId"    column="check_id"    />
+        <result property="checkNo"    column="check_no"    />
+        <result property="userName"    column="user_name"    />
+        <result property="checkPosition"    column="check_position"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="equipmentId"    column="equipment_id"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <association property="dept"    column="dept_id" javaType="SysDept" resultMap="deptResult" />
+        <association property="equipment"    column="equipment_id" javaType="Equipment" resultMap="equipmentResult" />
+    </resultMap>
+
+    <resultMap id="deptResult" type="SysDept">
+        <id     property="deptId"    column="dept_id"     />
+        <result property="parentId"  column="parent_id"   />
+        <result property="deptName"  column="dept_name"   />
+        <result property="ancestors" column="ancestors"   />
+        <result property="orderNum"  column="order_num"   />
+        <result property="leader"    column="leader"      />
+        <result property="status"    column="dept_status" />
+    </resultMap>
+
+    <resultMap type="Equipment" id="equipmentResult">
+        <id     property="equipmentId"      column="equipment_id"      />
+        <result property="equipmentNo"    column="equipment_no"    />
+        <result property="equipmentName"     column="equipment_name"     />
+        <result property="equipmentType"   column="equipment_type"   />
+    </resultMap>
+
+    <sql id="selectEcheckInfoVo">
+        select i.check_id, i.check_no, i.user_name, i.check_position, i.dept_id, i.equipment_id, i.status, i.del_flag, i.create_by, i.create_time, i.update_by, i.update_time,
+               d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.status as dept_status,
+               e.equipment_id, e.equipment_no, e.equipment_name, e.equipment_type
+        from echeck_info i
+                 left join sys_dept d on i.dept_id = d.dept_id
+                 left join echeck_equipment e on i.equipment_id = e.equipment_id
+    </sql>
+
+    <select id="selectEcheckInfoList" parameterType="EcheckInfo" resultMap="EcheckInfoResult">
+        <include refid="selectEcheckInfoVo"/>
+        <where>  
+            <if test="checkNo != null  and checkNo != ''"> and check_no like concat('%', #{checkNo}, '%')</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="checkPosition != null  and checkPosition != ''"> and check_position like concat('%', #{checkPosition}, '%')</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="equipmentId != null "> and equipment_id = #{equipmentId}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+        and i.del_flag = '0'
+        order by i.create_time desc
+    </select>
+    
+    <select id="selectEcheckInfoByCheckId" parameterType="Long" resultMap="EcheckInfoResult">
+        <include refid="selectEcheckInfoVo"/>
+        where check_id = #{checkId}
+    </select>
+        
+    <insert id="insertEcheckInfo" parameterType="EcheckInfo" useGeneratedKeys="true" keyProperty="checkId">
+        insert into echeck_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="checkNo != null and checkNo != ''">check_no,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="checkPosition != null">check_position,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="equipmentId != null">equipment_id,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="checkNo != null and checkNo != ''">#{checkNo},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="checkPosition != null">#{checkPosition},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="equipmentId != null">#{equipmentId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEcheckInfo" parameterType="EcheckInfo">
+        update echeck_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="checkNo != null and checkNo != ''">check_no = #{checkNo},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="checkPosition != null">check_position = #{checkPosition},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="equipmentId != null">equipment_id = #{equipmentId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where check_id = #{checkId}
+    </update>
+
+<!--    <delete id="deleteEcheckInfoByCheckId" parameterType="Long">-->
+<!--        delete from echeck_info where check_id = #{checkId}-->
+<!--    </delete>-->
+
+    <update id="deleteEcheckInfoByCheckId" parameterType="EcheckInfo">
+        update echeck_info set del_flag = '1'
+        where check_id = #{checkId}
+    </update>
+
+    <delete id="deleteEcheckInfoByCheckIds" parameterType="String">
+        delete from echeck_info where check_id in 
+        <foreach item="checkId" collection="array" open="(" separator="," close=")">
+            #{checkId}
+        </foreach>
+    </delete>
+</mapper>

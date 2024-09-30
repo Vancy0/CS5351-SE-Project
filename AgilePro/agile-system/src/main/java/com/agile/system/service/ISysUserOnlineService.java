@@ -6,7 +6,7 @@ import com.agile.system.domain.SysUserOnline;
 /**
  * 在线用户 服务层
  * 
- * @author ruoyi
+ * @author agile
  */
 public interface ISysUserOnlineService
 {

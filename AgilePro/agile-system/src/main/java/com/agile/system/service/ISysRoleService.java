@@ -8,7 +8,7 @@ import com.agile.system.domain.SysUserRole;
 /**
  * 角色业务层
  * 
- * @author ruoyi
+ * @author agile
  */
 public interface ISysRoleService
 {

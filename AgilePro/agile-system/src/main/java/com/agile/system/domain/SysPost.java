@@ -12,7 +12,7 @@ import com.agile.common.core.domain.BaseEntity;
 /**
  * 岗位表 sys_post
  * 
- * @author ruoyi
+ * @author agile
  */
 public class SysPost extends BaseEntity
 {

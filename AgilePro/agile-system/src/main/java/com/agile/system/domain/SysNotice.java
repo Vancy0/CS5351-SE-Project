@@ -10,7 +10,7 @@ import com.agile.common.xss.Xss;
 /**
  * 通知公告表 sys_notice
  * 
- * @author ruoyi
+ * @author agile
  */
 public class SysNotice extends BaseEntity
 {

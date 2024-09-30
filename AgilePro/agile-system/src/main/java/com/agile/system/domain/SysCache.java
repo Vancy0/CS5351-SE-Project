@@ -5,7 +5,7 @@ import com.agile.common.utils.StringUtils;
 /**
  * 缓存信息
  * 
- * @author ruoyi
+ * @author agile
  */
 public class SysCache
 {
