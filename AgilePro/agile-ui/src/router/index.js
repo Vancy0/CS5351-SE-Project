@@ -87,6 +87,20 @@ export const constantRoutes = [
         meta: { title: '个人中心', icon: 'user' }
       }
     ]
+  },
+  {
+    path: '/project',
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: 'subproject/:projectId',
+      component: (resolve) => require(['@/views/project/subproject'], resolve),
+      name: 'subprojectDetail',
+      meta: {
+        title: '子项目详情',
+        icon: ''
+      }
+    }]
   }
 ]
 
