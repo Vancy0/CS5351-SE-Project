@@ -1,6 +1,6 @@
 <template>
   <div class="app-container home" style="background-color: #f0f8ff; height: 100vh; display: flex; align-items: center; justify-content: center;">
-    <h1 style="font-size: 48px; color: #333; text-align: center;">Welcome to Agility X</h1>
+    <h1 class=dashboard-title >Welcome to Agility X</h1>
   </div>
 </template>
 
@@ -22,5 +22,14 @@ export default {
   display: flex; /* 使用Flexbox布局 */
   align-items: center; /* 垂直居中 */
   justify-content: center; /* 水平居中 */
+}
+
+.dashboard-title {
+  font-family: "Monotype Corsiva", cursive;
+  text-align: center;
+  font-weight: bold;
+  font-size: 144px;
+  color: #2133bd;
+  text-shadow: 2px 2px 4px rgba(59, 196, 38, 0.5);
 }
 </style>

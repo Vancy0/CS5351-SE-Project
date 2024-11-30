@@ -193,7 +193,7 @@ export default {
   name: "Subproject",
   data() {
     return {
-      projectId: "",
+      // projectId: "",
       // 遮罩层
       loading: true,
       // 选中数组
@@ -242,17 +242,19 @@ export default {
     };
   },
   created() {
-
+    this.projectId = this.$route.params.projectId
     this.getList();
   },
   methods: {
     /** Fetch subproject list */
     getList() {
+      console.log(this.projectId)
       this.loading = true;
       this.queryParams.projectId = this.projectId;
       console.log("this.queryParams: ",this.queryParams);
       listSubproject(this.queryParams).then(response => {
         this.subprojectList = response.rows;
+        console.log("subproject;ost",this.subprojectList)
         this.total = response.total;
         this.loading = false;
       });
