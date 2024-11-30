@@ -28,10 +28,11 @@
               v-for="task in filteredTasks(status)"
               :key="task.id"
               class="task-item"
-              @click="selectTask(task)"
+              @click.native="selectTask(task)"
             >
               <h3>{{ task.title }}</h3>
               <p>{{ task.description }}</p>
+              <span v-if="task">{{ task.title }}</span>  <!-- 确保 task 存在 -->
             </el-card>
           </div>
         </el-card>
@@ -71,6 +72,7 @@ export default {
       allTasks: {
         1: [  // Project A
           { id: 1, title: 'Task 1', description: 'This is the first task', status: 'To Do', priority: 'High' },
+          { id: 3, title: 'Task 3', description: 'This is the first task', status: 'To Do', priority: 'High' },
           { id: 2, title: 'Task 2', description: 'This is the second task', status: 'In Progress', priority: 'Medium' },
         ],
         2: [  // Project B
@@ -87,8 +89,10 @@ export default {
     };
   },
   methods: {
+
     // 过滤任务，按状态分组
     filteredTasks(status) {
+      console.log(`Tasks for status "${status}":`, this.selectedProject ? this.allTasks[this.selectedProject].filter((task) => task.status === status) : []);
       return this.selectedProject
         ? this.allTasks[this.selectedProject].filter((task) => task.status === status)
         : [];
@@ -171,6 +175,8 @@ html, body {
   border-radius: 4px;
   margin-bottom: 10px;
   cursor: pointer;
+  position: relative;
+  z-index: 10;
 }
 
 .task-item:hover {

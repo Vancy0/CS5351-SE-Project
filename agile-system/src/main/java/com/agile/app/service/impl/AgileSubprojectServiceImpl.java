@@ -119,19 +119,20 @@ public class AgileSubprojectServiceImpl implements IAgileSubprojectService
         while (n <= max_n) {
             agileSubproject.setExpectedCycle(n);
             List<AgileSubproject> list_n = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
-
+            int cycle_left = 0;
             if (!list_n.isEmpty()) {
                 //计算所有storyPoint的和
                 int sum_n = 0;
                 for (AgileSubproject agileSubproject1 : list_n) {
                     sum_n += agileSubproject1.getStoryPoint();
                 }
-                int cycle_left = list_n_storyPoint.get(n-1) - sum_n;
+                cycle_left = list_n_storyPoint.get(n-1) - sum_n;
 
             } else {
-                int cycle_left = list_n_storyPoint.get(n-1);
-                list_n_storyPoint.add(cycle_left);
+                cycle_left = list_n_storyPoint.get(n-1);
+
             }
+            list_n_storyPoint.add(cycle_left);
             n++;
         }
         return list_n_storyPoint;
@@ -160,19 +161,20 @@ public class AgileSubprojectServiceImpl implements IAgileSubprojectService
         while (n <= max_n) {
             agileSubproject.setFinishedCycle(n);
             List<AgileSubproject> list_n = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
-
+            int cycle_left = 0;
             if (!list_n.isEmpty()) {
                 //计算所有storyPoint的和
                 int sum_n = 0;
                 for (AgileSubproject agileSubproject1 : list_n) {
                     sum_n += agileSubproject1.getStoryPoint();
                 }
-                int cycle_left = list_n_storyPoint.get(n-1) - sum_n;
+                cycle_left = list_n_storyPoint.get(n-1) - sum_n;
 
             } else {
-                int cycle_left = list_n_storyPoint.get(n-1);
-                list_n_storyPoint.add(cycle_left);
+                cycle_left = list_n_storyPoint.get(n-1);
+
             }
+            list_n_storyPoint.add(cycle_left);
             n++;
         }
         return list_n_storyPoint;

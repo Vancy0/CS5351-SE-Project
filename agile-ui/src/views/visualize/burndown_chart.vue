@@ -13,7 +13,7 @@
         <el-col :span="24">
           <el-select v-model="selectedProject" @change="loadBurndownChart" placeholder="Select Project" class="select-project">
             <el-option
-              v-for="project in projects"
+              v-for="project in idNameList"
               :key="project.id"
               :label="project.name"
               :value="project.id"
@@ -33,44 +33,75 @@
 
 <script>
 import BurndownChart from '../dashboard/BurndownChart.vue'; // 引入燃尽图组件
-import {} from "@/api/project/visual";
+import {getExpectedLine, getActualLine} from "@/api/project/visual";
+import {listProject} from "@/api/project/project";
+
 export default {
+  mounted() {
+      this.getProjectId()
+  },
   components: {
     BurndownChart
   },
   data() {
     return {
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        projectName: null,
+        status: null,
+        managerName: null,
+      },
       // 模拟的项目数据
-      projects: [
-        { id: 1, name: 'Project A' },
-        { id: 2, name: 'Project B' },
-        { id: 3, name: 'Project C' }
-      ],
+      idNameList: [],
+      expectedLine:[],
+      actualLine:[],
       selectedProject: null,  // 当前选中的项目
       burndownData: null  // 当前项目的燃尽图数据
     };
   },
   methods: {
+    getProjectId(){
+      listProject(this.queryParams).then(response => {
+        this.projectList = response.rows;
+        this.idNameList = this.projectList.map(project => ({
+          id: project.projectId,
+          name: project.projectName
+        }));
+        console.log(this.idNameList);
+        console.log(this.projectList);
+      });
+    },
     // 选择项目后加载燃尽图数据
     loadBurndownChart() {
-      if (this.selectedProject) {
-        // 模拟不同项目的燃尽图数据
-        switch (this.selectedProject) {
-          case 1:
-            this.burndownData = this.getBurndownDataA();
-            break;
-          case 2:
-            this.burndownData = this.getBurndownDataB();
-            break;
-          case 3:
-            this.burndownData = this.getBurndownDataC();
-            break;
-          default:
-            this.burndownData = null;
-        }
+      if (this.selectedProject){
+        console.log(this.selectedProject);
+        getExpectedLine(this.selectedProject).then(response =>{
+          this.expectedLine = response.rows;
+          console.log("expected line data:",this.expectedLine)
+        });
+        getActualLine(this.selectedProject).then(response =>{
+          this.actualLine = response.rows;
+          console.log("actual line data:",this.actualLine)
+        });
+        this.burndownData = this.getBurndownData();
       }
+
     },
-    
+
+    getBurndownData() {
+      // 生成横坐标数组
+      const dates = this.expectedLine.map((_, index) => index);
+          
+      // 返回格式化的数据对象
+      const burndownData = {
+        dates: dates,  // 横坐标
+        expectedRemainingWork: this.expectedLine,  // 纵坐标
+        actualRemainingWork: this.actualLine
+      };
+      console.log(burndownData);
+      return burndownData;
+    },
     // 模拟项目 A 的燃尽图数据
     getBurndownDataA() {
       return {

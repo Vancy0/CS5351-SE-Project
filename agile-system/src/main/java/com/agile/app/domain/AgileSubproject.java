@@ -176,7 +176,7 @@ public class AgileSubproject extends BaseEntity
             .append("memberId", getMemberId())
             .append("storyPoint", getStoryPoint())
             .append("finishedCycle", getFinishedCycle())
-            .append("expctedCycle", getExpectedCycle())
+            .append("expectedCycle", getExpectedCycle())
             .toString();
     }
 }

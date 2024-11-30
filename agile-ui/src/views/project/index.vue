@@ -239,6 +239,7 @@ export default {
       this.loading = true;
       listProject(this.queryParams).then(response => {
         this.projectList = response.rows;
+        console.log(this.projectList)
         this.total = response.total;
         this.loading = false;
       });
