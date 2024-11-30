@@ -71,12 +71,14 @@
 
     <el-table v-loading="loading" :data="projectList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
+      <!-- <el-table-column label="ID" align="center" prop="id" /> -->
       <el-table-column label="Project ID" align="center" prop="projectId" />
       <el-table-column label="Project Name" align="center" prop="projectName" />
       <el-table-column label="Project Status" align="center" prop="status" />
       <el-table-column label="Manager ID" align="center" prop="managerId" />
       <el-table-column label="Manager Name" align="center" prop="managerName" />
+      <!-- TODO -->
+      <el-table-column label="Cycles" align="center" prop="cycles" />
       <el-table-column label="Approval Time" align="center" prop="verifyTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.verifyTime, '{y}-{m}-{d}') }}</span>
@@ -132,7 +134,6 @@
         <el-form-item label="Project Name" prop="projectName">
           <el-input v-model="form.projectName" placeholder="Please enter project name" />
         </el-form-item>
-
         <el-form-item prop="status">
           <template #label>
             Project Status
@@ -147,13 +148,15 @@
             <el-option label="Completed" value="3"></el-option>
           </el-select>
         </el-form-item>
-
-
         <el-form-item label="Manager ID" prop="managerId">
           <el-input v-model="form.managerId" placeholder="Please enter manager ID" />
         </el-form-item>
         <el-form-item label="Manager Name" prop="managerName">
           <el-input v-model="form.managerName" placeholder="Please enter manager name" />
+        </el-form-item>
+        <!-- TODO -->
+        <el-form-item label="Cycles" prop="cycles">
+          <el-input v-model="form.cycles" placeholder="Please enter project cycles" />
         </el-form-item>
         <el-form-item label="Approval Time" prop="verifyTime">
           <el-date-picker clearable

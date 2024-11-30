@@ -95,9 +95,9 @@ export const constantRoutes = [
       {
         path: 'subproject/:projectId',
         component: (resolve) => require(['@/views/project/subproject'], resolve),
-        name: 'subprojectDetail',
+        name: 'taskDetail',
         meta: {
-          title: 'Subproejct Detail',
+          title: 'Task Detail',
           icon: ''
         }
       },

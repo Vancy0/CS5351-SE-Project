@@ -9,18 +9,18 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="Subproject ID" prop="subprojectId">
+      <el-form-item label="Task ID" prop="subprojectId">
         <el-input
           v-model="queryParams.subprojectId"
-          placeholder="Please enter subproject ID"
+          placeholder="Please enter task ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="Subproject Name" prop="subprojectName">
+      <el-form-item label="Task Name" prop="subprojectName">
         <el-input
           v-model="queryParams.subprojectName"
-          placeholder="Please enter subproject name"
+          placeholder="Please enter task name"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -79,16 +79,18 @@
 
     <el-table v-loading="loading" :data="subprojectList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
+      <!-- <el-table-column label="ID" align="center" prop="id" /> -->
       <el-table-column label="Project ID" align="center" prop="projectId" />
-      <el-table-column label="Subproject ID" align="center" prop="subprojectId" />
-      <el-table-column label="Subproject Name" align="center" prop="subprojectName" />
-      <el-table-column label="Subproject Status" align="center" prop="subStatus" />
+      <el-table-column label="Task ID" align="center" prop="subprojectId" />
+      <el-table-column label="Task Name" align="center" prop="subprojectName" />
+      <el-table-column label="Task Status" align="center" prop="subStatus" />
+      <el-table-column label="Story Points" align="center" prop="point" />
       <el-table-column label="Approval Time" align="center" prop="verifyTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.verifyTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
+
       <el-table-column label="Actions" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -123,15 +125,15 @@
         <el-form-item label="Project ID" prop="projectId">
           <el-input v-model="form.projectId" placeholder="Please enter project ID" />
         </el-form-item>
-        <el-form-item label="Subproject ID" prop="subprojectId">
+        <el-form-item label="Task ID" prop="subprojectId">
           <el-input v-model="form.subprojectId" placeholder="Please enter subproject ID" />
         </el-form-item>
-        <el-form-item label="Subproject Name" prop="subprojectName">
+        <el-form-item label="Task Name" prop="subprojectName">
           <el-input v-model="form.subprojectName" placeholder="Please enter subproject name" />
         </el-form-item>
         <el-form-item prop="subStatus">
           <template #label>
-            SubProject Status
+            Task Status
             <!-- Tooltip for detailed description, placed next to label -->
             <el-tooltip class="item" effect="dark" content="1: In Progress, 2: On Hold, 3: Completed" placement="top-start">
               <el-button type="text" icon="el-icon-info" size="mini" style="padding: 0; margin-left: 5px;"></el-button>
@@ -142,6 +144,10 @@
             <el-option label="On Hold" value="2"></el-option>
             <el-option label="Completed" value="3"></el-option>
           </el-select>
+        </el-form-item>
+        <!-- TODO -->
+        <el-form-item label="Story Points" prop="point">
+          <el-input v-model="form.point" placeholder="Please enter story points" />
         </el-form-item>
         <el-form-item label="Approval Time" prop="verifyTime">
           <el-date-picker clearable
@@ -216,6 +222,9 @@ export default {
         ],
         subStatus: [
           { required: true, message: "Status id cannot be empty", trigger: "blur" }
+        ],
+        point: [
+          { required: true, message: "Story points cannot be empty", trigger: "blur" }
         ],
       }
     };
