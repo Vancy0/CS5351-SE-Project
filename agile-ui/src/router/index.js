@@ -97,12 +97,31 @@ export const constantRoutes = [
         component: (resolve) => require(['@/views/project/subproject'], resolve),
         name: 'subprojectDetail',
         meta: {
-          title: '子项目详情',
+          title: 'Subproejct Detail',
+          icon: ''
+        }
+      },
+      {
+        path: 'kanban',
+        component: (resolve) => require(['@/views/kanban/index'], resolve),
+        name: 'Kanban123',
+        meta: {
+          title: 'Kanban',
+          icon: ''
+        }
+      },
+      {
+        path: 'visual',
+        component: (resolve) => require(['@/views/visualize/burndown_chart'], resolve),
+        name: 'viusalization',
+        meta: {
+          title: 'Burndown Chart',
           icon: ''
         }
       }
     ]
   },
+
 ]
 
 // 动态路由，基于用户权限动态去加载
