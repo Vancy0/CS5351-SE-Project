@@ -78,7 +78,8 @@
       <el-table-column label="Manager ID" align="center" prop="managerId" />
       <el-table-column label="Manager Name" align="center" prop="managerName" />
       <!-- TODO -->
-      <el-table-column label="Cycles" align="center" prop="cycles" />
+      <el-table-column label="Current Cycle" align="center" prop="curCycle" />
+      <el-table-column label="Total Cycle" align="center" prop="totalCycle" />
       <el-table-column label="Approval Time" align="center" prop="verifyTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.verifyTime, '{y}-{m}-{d}') }}</span>
@@ -155,8 +156,11 @@
           <el-input v-model="form.managerName" placeholder="Please enter manager name" />
         </el-form-item>
         <!-- TODO -->
-        <el-form-item label="Cycles" prop="cycles">
-          <el-input v-model="form.cycles" placeholder="Please enter project cycles" />
+        <el-form-item label="Current Cycle" prop="curCycle">
+          <el-input v-model="form.curCycle" placeholder="Please enter current cycle" />
+        </el-form-item>
+        <el-form-item label="Total Cycle" prop="totalCycle">
+          <el-input v-model="form.totalCycle" placeholder="Please enter project cycle" />
         </el-form-item>
         <el-form-item label="Approval Time" prop="verifyTime">
           <el-date-picker clearable
@@ -203,6 +207,7 @@ export default {
       open: false,
       // Query parameters
       queryParams: {
+        //TODO
         pageNum: 1,
         pageSize: 10,
         projectName: null,

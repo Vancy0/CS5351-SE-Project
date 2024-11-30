@@ -103,7 +103,7 @@ export const constantRoutes = [
       },
       {
         path: 'kanban',
-        component: (resolve) => require(['@/views/kanban/index'], resolve),
+        component: (resolve) => require(['@/views/kanban/kanban'], resolve),
         name: 'Kanban123',
         meta: {
           title: 'Kanban',
