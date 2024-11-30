@@ -83,7 +83,13 @@
       <el-table-column label="Project ID" align="center" prop="projectId" />
       <el-table-column label="Task ID" align="center" prop="subprojectId" />
       <el-table-column label="Task Name" align="center" prop="subprojectName" />
-      <el-table-column label="Task Status" align="center" prop="subStatus" />
+      <!-- <el-table-column label="Task Status" align="center" prop="subStatus" /> -->
+      <el-table-column label="Task Status" align="center" prop="status">
+        <template slot-scope="scope">
+          <span v-if="scope.row.status === '0'">未通过</span>
+          <span v-else-if="scope.row.status === '1'">已通过</span>
+        </template>
+      </el-table-column>
       <el-table-column label="Story Points" align="center" prop="point" />
       <el-table-column label="Approval Time" align="center" prop="verifyTime" width="180">
         <template slot-scope="scope">
