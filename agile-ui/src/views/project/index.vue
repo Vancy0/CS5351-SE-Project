@@ -78,7 +78,7 @@
       <el-table-column label="Manager ID" align="center" prop="managerId" />
       <el-table-column label="Manager Name" align="center" prop="managerName" />
       <!-- TODO -->
-      <el-table-column label="Current Cycle" align="center" prop="curCycle" />
+      <el-table-column label="Current Cycle" align="center" prop="currentCycle" />
       <el-table-column label="Total Cycle" align="center" prop="totalCycle" />
       <el-table-column label="Approval Time" align="center" prop="verifyTime" width="180">
         <template slot-scope="scope">
@@ -156,8 +156,8 @@
           <el-input v-model="form.managerName" placeholder="Please enter manager name" />
         </el-form-item>
         <!-- TODO -->
-        <el-form-item label="Current Cycle" prop="curCycle">
-          <el-input v-model="form.curCycle" placeholder="Please enter current cycle" />
+        <el-form-item label="Current Cycle" prop="currentCycle">
+          <el-input v-model="form.currentCycle" placeholder="Please enter current cycle" />
         </el-form-item>
         <el-form-item label="Total Cycle" prop="totalCycle">
           <el-input v-model="form.totalCycle" placeholder="Please enter project cycle" />
@@ -262,7 +262,9 @@ export default {
         updateTime: null,
         verifyTime: null,
         updateBy: null,
-        delFlag: null
+        delFlag: null,
+        // currentCycle: null,
+        // totalCycle: null
       };
       this.resetForm("form");
     },
@@ -305,6 +307,7 @@ export default {
     /** Submit form */
     submitForm() {
       this.$refs["form"].validate(valid => {
+        console.log(this.form);
         if (valid) {
           if (this.form.id != null) {
             updateProject(this.form).then(response => {

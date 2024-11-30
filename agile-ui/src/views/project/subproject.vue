@@ -84,8 +84,9 @@
       <el-table-column label="Task ID" align="center" prop="subprojectId" />
       <el-table-column label="Task Name" align="center" prop="subprojectName" />
       <el-table-column label="Task Status" align="center" prop="subStatus" />
-      <el-table-column label="Story Points" align="center" prop="point" />
-      <el-table-column label="Finished Cycle" align="center" prop="finCycle" />
+      <el-table-column label="Story Points" align="center" prop="storyPoint" />
+      <el-table-column label="Expected Cycle" align="center" prop="expectedCycle" />
+      <el-table-column label="Finished Cycle" align="center" prop="finishedCycle" />
       <el-table-column label="Member ID" align="center" prop="memberId" />
       <el-table-column label="Approval Time" align="center" prop="verifyTime" width="180">
         <template slot-scope="scope">
@@ -148,11 +149,14 @@
           </el-select>
         </el-form-item>
         <!-- TODO -->
-        <el-form-item label="Story Points" prop="point">
-          <el-input v-model="form.point" placeholder="Please enter story points" />
+        <el-form-item label="Story Points" prop="storyPoint">
+          <el-input v-model="form.storyPoint" placeholder="Please enter story points" />
         </el-form-item>
-        <el-form-item label="Finished Cycle" prop="finCycle">
-          <el-input v-model="form.finCycle" placeholder="Please enter finished cycle" />
+        <el-form-item label="Expected Cycle" prop="expectedCycle">
+          <el-input v-model="form.expectedCycle" placeholder="Please enter expected cycle" />
+        </el-form-item>
+        <el-form-item label="Finished Cycle" prop="finishedCycle">
+          <el-input v-model="form.finishedCycle" placeholder="Please enter finished cycle" />
         </el-form-item>
         <el-form-item label="Member ID" prop="memberId">
           <el-input v-model="form.memberId" placeholder="Please enter member ID" />

@@ -99,6 +99,7 @@ export default {
     },
     // 选择任务
     selectTask(task) {
+      console.log('Task clicked:', task);  // 调试信息
       this.selectedTask = task;
       this.dialogVisible = true; // 打开任务详情模态框
     },
