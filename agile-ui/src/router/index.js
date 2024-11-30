@@ -5,7 +5,6 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-
 /**
  * Note: 路由配置项
  *
@@ -92,16 +91,18 @@ export const constantRoutes = [
     path: '/project',
     component: Layout,
     hidden: true,
-    children: [{
-      path: 'subproject/:projectId',
-      component: (resolve) => require(['@/views/project/subproject'], resolve),
-      name: 'subprojectDetail',
-      meta: {
-        title: '子项目详情',
-        icon: ''
+    children: [
+      {
+        path: 'subproject/:projectId',
+        component: (resolve) => require(['@/views/project/subproject'], resolve),
+        name: 'subprojectDetail',
+        meta: {
+          title: '子项目详情',
+          icon: ''
+        }
       }
-    }]
-  }
+    ]
+  },
 ]
 
 // 动态路由，基于用户权限动态去加载
