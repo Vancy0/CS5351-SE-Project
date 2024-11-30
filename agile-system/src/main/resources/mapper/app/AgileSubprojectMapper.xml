@@ -16,10 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="verifyTime"    column="verify_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="delFlag"    column="del_flag"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="storyPoint"    column="story_point"    />
+        <result property="finishedCycle"    column="finished_cycle"    />
     </resultMap>
 
     <sql id="selectAgileSubprojectVo">
-        select id, project_id, subproject_id, subproject_name, sub_status, create_time, create_by, update_time, verify_time, update_by, del_flag from agile_subproject
+        select id, project_id, subproject_id, subproject_name, sub_status, create_time, create_by, update_time, verify_time, update_by, del_flag, member_id, story_point, finished_cycle from agile_subproject
     </sql>
 
     <select id="selectAgileSubprojectList" parameterType="AgileSubproject" resultMap="AgileSubprojectResult">
@@ -50,6 +53,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="verifyTime != null">verify_time,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="delFlag != null">del_flag,</if>
+            <if test="memberId != null">member_id,</if>
+            <if test="storyPoint != null">story_point,</if>
+            <if test="finishedCycle != null">finished_cycle,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="projectId != null">#{projectId},</if>
@@ -62,6 +68,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="verifyTime != null">#{verifyTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="delFlag != null">#{delFlag},</if>
+            <if test="memberId != null">#{memberId},</if>
+            <if test="storyPoint != null">#{storyPoint},</if>
+            <if test="finishedCycle != null">#{finishedCycle},</if>
          </trim>
     </insert>
 
@@ -78,6 +87,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="verifyTime != null">verify_time = #{verifyTime},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="storyPoint != null">story_point = #{storyPoint},</if>
+            <if test="finishedCycle != null">finished_cycle = #{finishedCycle},</if>
         </trim>
         where id = #{id}
     </update>

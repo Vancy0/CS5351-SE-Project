@@ -44,6 +44,12 @@ public class AgileSubproject extends BaseEntity
     /** 删除标记，0正常，1删除 */
     private String delFlag;
 
+    private String memberId;
+
+    private Integer storyPoint;
+
+    private String finishedCycle;
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -108,6 +114,38 @@ public class AgileSubproject extends BaseEntity
         return delFlag;
     }
 
+    public void setMemberId(String memberId)
+    {
+        this.memberId = memberId;
+    }
+
+    public String getMemberId()
+    {
+        return memberId;
+    }
+
+    public void setStoryPoint(Integer storyPoint)
+    {
+        this.storyPoint = storyPoint;
+    }
+
+    public Integer getStoryPoint()
+    {
+        return storyPoint;
+    }
+
+    public void setFinishedCycle(String finishedCycle)
+    {
+        this.finishedCycle = finishedCycle;
+    }
+
+    public String getFinishedCycle()
+    {
+        return finishedCycle;
+    }
+
+
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -122,6 +160,9 @@ public class AgileSubproject extends BaseEntity
             .append("verifyTime", getVerifyTime())
             .append("updateBy", getUpdateBy())
             .append("delFlag", getDelFlag())
+            .append("memberId", getMemberId())
+            .append("storyPoint", getStoryPoint())
+            .append("finishedCycle", getFinishedCycle())
             .toString();
     }
 }

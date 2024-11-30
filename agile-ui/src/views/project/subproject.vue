@@ -237,6 +237,7 @@ export default {
     getList() {
       this.loading = true;
       this.queryParams.projectId = this.projectId;
+      console.log(this.queryParams);
       listSubproject(this.queryParams).then(response => {
         this.subprojectList = response.rows;
         this.total = response.total;
