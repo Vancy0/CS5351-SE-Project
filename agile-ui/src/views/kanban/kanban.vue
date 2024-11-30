@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import {} from "@/api/project/kanban";
 export default {
   data() {
     return {

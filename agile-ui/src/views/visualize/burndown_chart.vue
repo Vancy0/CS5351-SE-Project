@@ -33,7 +33,7 @@
 
 <script>
 import BurndownChart from '../dashboard/BurndownChart.vue'; // 引入燃尽图组件
-
+import {} from "@/api/project/visual";
 export default {
   components: {
     BurndownChart

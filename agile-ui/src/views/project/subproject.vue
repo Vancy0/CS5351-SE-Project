@@ -85,6 +85,8 @@
       <el-table-column label="Task Name" align="center" prop="subprojectName" />
       <el-table-column label="Task Status" align="center" prop="subStatus" />
       <el-table-column label="Story Points" align="center" prop="point" />
+      <el-table-column label="Finished Cycle" align="center" prop="finCycle" />
+      <el-table-column label="Member ID" align="center" prop="memberId" />
       <el-table-column label="Approval Time" align="center" prop="verifyTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.verifyTime, '{y}-{m}-{d}') }}</span>
@@ -149,6 +151,12 @@
         <el-form-item label="Story Points" prop="point">
           <el-input v-model="form.point" placeholder="Please enter story points" />
         </el-form-item>
+        <el-form-item label="Finished Cycle" prop="finCycle">
+          <el-input v-model="form.finCycle" placeholder="Please enter finished cycle" />
+        </el-form-item>
+        <el-form-item label="Member ID" prop="memberId">
+          <el-input v-model="form.memberId" placeholder="Please enter member ID" />
+        </el-form-item>
         <el-form-item label="Approval Time" prop="verifyTime">
           <el-date-picker clearable
                           v-model="form.verifyTime"
@@ -203,6 +211,7 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
+        //TODO
         pageNum: 1,
         pageSize: 10,
         projectId: null,
