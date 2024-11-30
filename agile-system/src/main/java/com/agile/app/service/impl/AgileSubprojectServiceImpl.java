@@ -1,5 +1,6 @@
 package com.agile.app.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.agile.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,4 +94,36 @@ public class AgileSubprojectServiceImpl implements IAgileSubprojectService
     {
         return agileSubprojectMapper.deleteAgileSubprojectById(id);
     }
+
+    @Override
+    public List<Integer> selectCycleById(Long projectId){
+        int n = 1;
+        AgileSubproject agileSubproject = new AgileSubproject();
+        agileSubproject.setProjectId(projectId);
+        List<AgileSubproject> list = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
+        //选取expectedCycle最大的值作为max_n
+        int max_n = 0;
+        for (AgileSubproject agileSubproject1 : list) {
+            if (agileSubproject1.getExpectedCycle() > max_n) {
+                max_n = agileSubproject1.getExpectedCycle();
+            }
+        }
+        List<Integer> list_n_storyPoint = new ArrayList<>();
+        while (n <= max_n) {
+            agileSubproject.setExpectedCycle(n);
+            List<AgileSubproject> list_n = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
+
+            if (list_n.size() > 0) {
+                //计算所有storyPoint的和
+                int sum = 0;
+                for (AgileSubproject agileSubproject1 : list_n) {
+                    sum += agileSubproject1.getStoryPoint();
+                }
+                //把sum插入list_n_storyPoint中
+                list_n_storyPoint.add(sum);
+            }
+            n++;
+        }
+        return list_n_storyPoint;
+    };
 }

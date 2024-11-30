@@ -101,4 +101,15 @@ public class AgileSubprojectController extends BaseController
     {
         return toAjax(agileSubprojectService.deleteAgileSubprojectByIds(ids));
     }
+
+    //查询cycle
+    @GetMapping("/getCycle/{projectId}")
+    public AjaxResult getCycle(@PathVariable("projectId") Long projectId){
+//        return success(agileSubprojectService.selectAgileSubprojectById(projectId));
+        List<Integer> list = agileSubprojectService.selectCycleById(projectId);
+//        return getDataTable(list);
+        return success(list);
+    }
+
+
 }

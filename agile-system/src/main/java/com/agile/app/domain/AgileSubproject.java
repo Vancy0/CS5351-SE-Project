@@ -48,9 +48,9 @@ public class AgileSubproject extends BaseEntity
 
     private Integer storyPoint;
 
-    private String finishedCycle;
+    private Integer finishedCycle;
 
-    private String expectedCycle;
+    private Integer expectedCycle;
 
     public void setId(Long id) 
     {
@@ -136,22 +136,22 @@ public class AgileSubproject extends BaseEntity
         return storyPoint;
     }
 
-    public void setFinishedCycle(String finishedCycle)
+    public void setFinishedCycle(Integer finishedCycle)
     {
         this.finishedCycle = finishedCycle;
     }
 
-    public String getFinishedCycle()
+    public Integer getFinishedCycle()
     {
         return finishedCycle;
     }
 
-    public void setExpectedCycle(String expectedCycle)
+    public void setExpectedCycle(Integer expectedCycle)
     {
         this.expectedCycle = expectedCycle;
     }
 
-    public String getExpectedCycle()
+    public Integer getExpectedCycle()
     {
         return expectedCycle;
     }

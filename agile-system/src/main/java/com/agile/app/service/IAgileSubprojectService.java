@@ -58,4 +58,6 @@ public interface IAgileSubprojectService
      * @return 结果
      */
     int deleteAgileSubprojectById(Long id);
+
+    List<Integer> selectCycleById(Long projectId);
 }
