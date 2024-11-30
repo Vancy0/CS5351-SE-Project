@@ -96,7 +96,7 @@ public class AgileSubprojectServiceImpl implements IAgileSubprojectService
     }
 
     @Override
-    public List<Integer> selectCycleById(Long projectId){
+    public List<Integer> selectExpectedCycleById(Long projectId){
         int n = 1;
         AgileSubproject agileSubproject = new AgileSubproject();
         agileSubproject.setProjectId(projectId);
@@ -108,19 +108,70 @@ public class AgileSubprojectServiceImpl implements IAgileSubprojectService
                 max_n = agileSubproject1.getExpectedCycle();
             }
         }
+        int sum = 0;
+        List<AgileSubproject> list_all = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
+        for (AgileSubproject agileSubproject1 : list_all) {
+            sum += agileSubproject1.getStoryPoint();
+        }
+
         List<Integer> list_n_storyPoint = new ArrayList<>();
+        list_n_storyPoint.add(sum);
         while (n <= max_n) {
             agileSubproject.setExpectedCycle(n);
             List<AgileSubproject> list_n = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
 
-            if (list_n.size() > 0) {
+            if (!list_n.isEmpty()) {
                 //计算所有storyPoint的和
-                int sum = 0;
+                int sum_n = 0;
                 for (AgileSubproject agileSubproject1 : list_n) {
-                    sum += agileSubproject1.getStoryPoint();
+                    sum_n += agileSubproject1.getStoryPoint();
                 }
-                //把sum插入list_n_storyPoint中
-                list_n_storyPoint.add(sum);
+                int cycle_left = list_n_storyPoint.get(n-1) - sum_n;
+
+            } else {
+                int cycle_left = list_n_storyPoint.get(n-1);
+                list_n_storyPoint.add(cycle_left);
+            }
+            n++;
+        }
+        return list_n_storyPoint;
+    };
+    @Override
+    public List<Integer> selectFinishedCycleById(Long projectId){
+        int n = 1;
+        AgileSubproject agileSubproject = new AgileSubproject();
+        agileSubproject.setProjectId(projectId);
+        List<AgileSubproject> list = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
+        //选取FinishedCycle最大的值作为max_n
+        int max_n = 0;
+        for (AgileSubproject agileSubproject1 : list) {
+            if (agileSubproject1.getFinishedCycle() > max_n) {
+                max_n = agileSubproject1.getFinishedCycle();
+            }
+        }
+        int sum = 0;
+        List<AgileSubproject> list_all = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
+        for (AgileSubproject agileSubproject1 : list_all) {
+            sum += agileSubproject1.getStoryPoint();
+        }
+
+        List<Integer> list_n_storyPoint = new ArrayList<>();
+        list_n_storyPoint.add(sum);
+        while (n <= max_n) {
+            agileSubproject.setFinishedCycle(n);
+            List<AgileSubproject> list_n = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
+
+            if (!list_n.isEmpty()) {
+                //计算所有storyPoint的和
+                int sum_n = 0;
+                for (AgileSubproject agileSubproject1 : list_n) {
+                    sum_n += agileSubproject1.getStoryPoint();
+                }
+                int cycle_left = list_n_storyPoint.get(n-1) - sum_n;
+
+            } else {
+                int cycle_left = list_n_storyPoint.get(n-1);
+                list_n_storyPoint.add(cycle_left);
             }
             n++;
         }

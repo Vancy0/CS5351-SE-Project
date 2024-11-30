@@ -59,5 +59,7 @@ public interface IAgileSubprojectService
      */
     int deleteAgileSubprojectById(Long id);
 
-    List<Integer> selectCycleById(Long projectId);
+    List<Integer> selectExpectedCycleById(Long projectId);
+
+    List<Integer> selectFinishedCycleById(Long projectId);
 }

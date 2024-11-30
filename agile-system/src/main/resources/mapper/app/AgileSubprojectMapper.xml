@@ -33,6 +33,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="subprojectId != null  and subprojectId != ''"> and subproject_id = #{subprojectId}</if>
             <if test="subprojectName != null  and subprojectName != ''"> and subproject_name like concat('%', #{subprojectName}, '%')</if>
             <if test="subStatus != null  and subStatus != ''"> and sub_status = #{subStatus}</if>
+            <if test="expectedCycle != null  and expectedCycle != ''"> and expected_cycle = #{expectedCycle}</if>
+            <if test="finishedCycle != null  and finishedCycle != ''"> and finished_cycle = #{finishedCycle}</if>
         </where>
     </select>
     

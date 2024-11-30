@@ -103,11 +103,18 @@ public class AgileSubprojectController extends BaseController
     }
 
     //查询cycle
-    @GetMapping("/getCycle/{projectId}")
-    public AjaxResult getCycle(@PathVariable("projectId") Long projectId){
+    @GetMapping("/getExpectedCycle/{projectId}")
+    public AjaxResult getExpectedCycle(@PathVariable("projectId") Long projectId){
 //        return success(agileSubprojectService.selectAgileSubprojectById(projectId));
-        List<Integer> list = agileSubprojectService.selectCycleById(projectId);
+        List<Integer> list = agileSubprojectService.selectExpectedCycleById(projectId);
 //        return getDataTable(list);
+        return success(list);
+    }
+
+    @GetMapping("/getFinishedCycle/{projectId}")
+    public AjaxResult getFinishedCycle(@PathVariable("projectId") Long projectId){
+//        return success(agileSubprojectService.selectAgileSubprojectById(projectId));
+        List<Integer> list = agileSubprojectService.selectFinishedCycleById(projectId);
         return success(list);
     }
 
