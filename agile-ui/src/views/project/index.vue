@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch">
       <el-form-item label="Project Name" prop="projectName">
         <el-input
           v-model="queryParams.projectName"
@@ -124,8 +124,8 @@
     />
 
     <!-- Add or Edit Project Dialog -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="150px">
         <el-form-item label="Project ID" prop="projectId">
           <el-input v-model="form.projectId" placeholder="Please enter project ID" />
         </el-form-item>

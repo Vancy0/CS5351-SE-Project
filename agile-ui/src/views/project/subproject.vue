@@ -118,8 +118,8 @@
     />
 
     <!-- Add or Edit Subproject Dialog -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="150px">
         <el-form-item label="Project ID" prop="projectId">
           <el-input v-model="form.projectId" placeholder="Please enter project ID" />
         </el-form-item>
@@ -137,8 +137,15 @@
                           placeholder="Please select approval time">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="Delete Flag: 0 for Normal, 1 for Deleted" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="Please enter delete flag: 0 for Normal, 1 for Deleted" />
+        <el-form-item prop="delFlag">
+          <template #label>
+            Delete Flag
+            <!-- Tooltip for detailed description, placed next to label -->
+            <el-tooltip class="item" effect="dark" content="0 for Normal, 1 for Deleted" placement="top-start">
+              <el-button type="text" icon="el-icon-info" size="mini" style="padding: 0; margin-left: 5px;"></el-button>
+            </el-tooltip>
+          </template>
+          <el-input v-model="form.delFlag" placeholder="Please enter delete flag" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
