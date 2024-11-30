@@ -19,6 +19,8 @@ public interface AgileProjectMapper
      */
     AgileProject selectAgileProjectById(Long id);
 
+    AgileProject selectAgileProjectByProjectId(Long projectId);
+
     /**
      * 查询项目列表
      * 

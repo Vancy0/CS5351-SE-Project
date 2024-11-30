@@ -2,12 +2,16 @@ package com.agile.app.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.agile.app.domain.AgileProject;
 import com.agile.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.agile.app.mapper.AgileSubprojectMapper;
 import com.agile.app.domain.AgileSubproject;
 import com.agile.app.service.IAgileSubprojectService;
+import com.agile.app.service.IAgileProjectService;
+import com.agile.app.mapper.AgileProjectMapper;
 
 /**
  * 子系统Service业务层处理
@@ -20,6 +24,8 @@ public class AgileSubprojectServiceImpl implements IAgileSubprojectService
 {
     @Autowired
     private AgileSubprojectMapper agileSubprojectMapper;
+    @Autowired
+    private AgileProjectMapper agileProjectMapper;
 
     /**
      * 查询子系统
@@ -101,13 +107,16 @@ public class AgileSubprojectServiceImpl implements IAgileSubprojectService
         AgileSubproject agileSubproject = new AgileSubproject();
         agileSubproject.setProjectId(projectId);
         List<AgileSubproject> list = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
-        //选取expectedCycle最大的值作为max_n
-        int max_n = 0;
-        for (AgileSubproject agileSubproject1 : list) {
-            if (agileSubproject1.getExpectedCycle() > max_n) {
-                max_n = agileSubproject1.getExpectedCycle();
-            }
-        }
+        //选取Project里totalCycle的值作为max_n
+        AgileProject agileProject = new AgileProject();
+        agileProject.setProjectId(projectId);
+        int max_n = agileProjectMapper.selectAgileProjectByProjectId(projectId).getTotalCycle();
+
+//        for (AgileSubproject agileSubproject1 : list) {
+//            if (agileSubproject1.getExpectedCycle() > max_n) {
+//                max_n = agileSubproject1.getExpectedCycle();
+//            }
+//        }
         int sum = 0;
         List<AgileSubproject> list_all = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
         for (AgileSubproject agileSubproject1 : list_all) {
@@ -144,12 +153,10 @@ public class AgileSubprojectServiceImpl implements IAgileSubprojectService
         agileSubproject.setProjectId(projectId);
         List<AgileSubproject> list = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
         //选取FinishedCycle最大的值作为max_n
-        int max_n = 0;
-        for (AgileSubproject agileSubproject1 : list) {
-            if (agileSubproject1.getFinishedCycle() > max_n) {
-                max_n = agileSubproject1.getFinishedCycle();
-            }
-        }
+        AgileProject agileProject = new AgileProject();
+        agileProject.setProjectId(projectId);
+        int max_n = agileProjectMapper.selectAgileProjectByProjectId(projectId).getTotalCycle();
+
         int sum = 0;
         List<AgileSubproject> list_all = agileSubprojectMapper.selectAgileSubprojectList(agileSubproject);
         for (AgileSubproject agileSubproject1 : list_all) {

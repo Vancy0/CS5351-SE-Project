@@ -39,6 +39,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
 
+    <select id="selectAgileProjectByProjectId" parameterType="Long" resultMap="AgileProjectResult">
+        <include refid="selectAgileProjectVo"/>
+        where project_id = #{projectId}
+    </select>
+
     <insert id="insertAgileProject" parameterType="AgileProject" useGeneratedKeys="true" keyProperty="id">
         insert into agile_project
         <trim prefix="(" suffix=")" suffixOverrides=",">
