@@ -7,15 +7,11 @@
         </el-col>
       </el-row>
     </div>
-    
+
     <!-- 项目选择 -->
-    <el-select v-model="selectedProject" @change="loadTasksForProject" placeholder="Select Project" class="select-width">
-      <el-option
-        v-for="project in projects"
-        :key="project.id"
-        :label="project.name"
-        :value="project.id"
-      />
+    <el-select v-model="selectedProject" @change="loadTasksForProject" placeholder="Select Project"
+      class="select-width">
+      <el-option v-for="project in idNameList" :key="project.id" :label="project.name" :value="project.id" />
     </el-select>
 
     <!-- 任务看板 -->
@@ -24,15 +20,10 @@
         <el-card :body-style="{ padding: '20px' }" class="task-column">
           <h2>{{ status }}</h2>
           <div class="task-list">
-            <el-card
-              v-for="task in filteredTasks(status)"
-              :key="task.id"
-              class="task-item"
-              @click.native="selectTask(task)"
-            >
+            <el-card v-for="task in filteredTasks(status)" :key="task.id" class="task-item" @click="selectTask(task)">
               <h3>{{ task.title }}</h3>
               <p>{{ task.description }}</p>
-              <span v-if="task">{{ task.title }}</span>  <!-- 确保 task 存在 -->
+              <span v-if="task">{{ task.title }}</span> <!-- 确保 task 存在 -->
             </el-card>
           </div>
         </el-card>
@@ -55,8 +46,12 @@
 </template>
 
 <script>
-import {} from "@/api/project/kanban";
+import { listProject } from "@/api/project/project";
+import { listSubproject } from "@/api/project/subproject";
 export default {
+  mounted() {
+    this.getProjectId()
+  },
   data() {
     return {
       // 模拟的项目数据
@@ -84,26 +79,74 @@ export default {
           { id: 6, title: 'Task 6', description: 'This is the sixth task', status: 'In Progress', priority: 'High' },
         ]
       },
+      querySubParams: {
+        pageNum: 1,
+        pageSize: 10,
+        projectId: null,
+        subprojectId: null,
+        subprojectName: null,
+        subStatus: null,
+      },
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        projectName: null,
+        status: null,
+        managerName: null,
+      },
+      projectList: [],
+      idNameList: [],
+      subprojectList: [],
       selectedTask: null, // 当前选中的任务
       dialogVisible: false, // 控制任务详情模态框的显示与隐藏
     };
   },
   methods: {
-
+    getProjectId() {
+      listProject(this.queryParams).then(response => {
+        this.projectList = response.rows;
+        this.idNameList = this.projectList.map(project => ({
+          id: project.projectId,
+          name: project.projectName
+        }));
+      });
+    },
     // 过滤任务，按状态分组
     filteredTasks(status) {
-      console.log(`Tasks for status "${status}":`, this.selectedProject ? this.allTasks[this.selectedProject].filter((task) => task.status === status) : []);
       return this.selectedProject
         ? this.allTasks[this.selectedProject].filter((task) => task.status === status)
         : [];
     },
+
     // 选择项目后加载该项目的任务
     loadTasksForProject() {
       this.selectedTask = null; // 选择项目后，初始化当前选中的任务为 null
+      if (this.selectedProject) {
+        console.log(this.selectedProject);
+        
+        this.getSubproject().then(() => {
+          this.allTasks = this.subprojectList.map(project => ({
+            id: project.subprojectId,
+            name: project.subprojectName,
+            status: project.subStatus === "1" ? 'To Do' :
+              project.subStatus === "2" ? 'In Progress' :
+                project.subStatus === "3" ? 'Done' : 'Unknown'
+          }));
+          console.log(this.allTasks);
+        });
+      }
+    },
+
+    getSubproject() {
+      this.querySubParams.projectId = this.selectedProject;
+      listSubproject(this.querySubParams).then(response => {
+        console.log(response.rows)
+        this.subprojectList = response.rows;
+        console.log("subproject list",this.subprojectList);
+      });
     },
     // 选择任务
     selectTask(task) {
-      console.log('Task clicked:', task);  // 调试信息
       this.selectedTask = task;
       this.dialogVisible = true; // 打开任务详情模态框
     },
@@ -117,8 +160,8 @@ export default {
 </script>
 
 <style scoped>
-
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -128,13 +171,16 @@ html, body {
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  opacity: 0.8; /* 使背景稍微透明 */
-  height: 100vh; /* 确保背景覆盖整个页面 */
-  background: linear-gradient(135deg, #ebd16555 25%, transparent 25%) -10px 0/ 20px 20px, 
-              linear-gradient(225deg, #ebd165 25%, transparent 25%) -10px 0/ 20px 20px, 
-              linear-gradient(315deg, #ebd16555 25%, transparent 25%) 0px 0/ 20px 20px, 
-              linear-gradient(45deg, #ebd165 25%, #96a039 25%) 0px 0/ 20px 20px;
-  background-size: cover; /* 背景按比例缩放，避免有空白 */
+  opacity: 0.8;
+  /* 使背景稍微透明 */
+  height: 100vh;
+  /* 确保背景覆盖整个页面 */
+  background: linear-gradient(135deg, #ebd16555 25%, transparent 25%) -10px 0/ 20px 20px,
+    linear-gradient(225deg, #ebd165 25%, transparent 25%) -10px 0/ 20px 20px,
+    linear-gradient(315deg, #ebd16555 25%, transparent 25%) 0px 0/ 20px 20px,
+    linear-gradient(45deg, #ebd165 25%, #96a039 25%) 0px 0/ 20px 20px;
+  background-size: cover;
+  /* 背景按比例缩放，避免有空白 */
 }
 
 
@@ -158,7 +204,7 @@ html, body {
 }
 
 .task-column {
-  width:400px;
+  width: 400px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
