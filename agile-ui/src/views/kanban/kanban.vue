@@ -20,10 +20,8 @@
         <el-card :body-style="{ padding: '20px' }" class="task-column">
           <h2>{{ status }}</h2>
           <div class="task-list">
-            <el-card v-for="task in filteredTasks(status)" :key="task.id" class="task-item" @click="selectTask(task)">
-              <h3>{{ task.title }}</h3>
-              <p>{{ task.description }}</p>
-              <span v-if="task">{{ task.title }}</span> <!-- 确保 task 存在 -->
+            <el-card v-for="task in filteredTasks(status)" :key="task.id" class="task-item">
+              <h3>{{ task.name }}</h3>
             </el-card>
           </div>
         </el-card>
@@ -31,7 +29,7 @@
     </el-row>
 
     <!-- 任务详情模态框 -->
-    <el-dialog :visible.sync="dialogVisible" title="Task Detail" width="500px">
+    <!-- <el-dialog :visible.sync="dialogVisible" title="Task Detail" width="500px">
       <div v-if="selectedTask">
         <p><strong>Title:</strong> {{ selectedTask.title }}</p>
         <p><strong>Description:</strong> {{ selectedTask.description }}</p>
@@ -41,7 +39,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="closeTaskDetail">Close</el-button>
       </span>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -114,7 +112,7 @@ export default {
     // 过滤任务，按状态分组
     filteredTasks(status) {
       return this.selectedProject
-        ? this.allTasks[this.selectedProject].filter((task) => task.status === status)
+        ? this.allTasks.filter((task) => task.status === status)
         : [];
     },
 
@@ -123,26 +121,36 @@ export default {
       this.selectedTask = null; // 选择项目后，初始化当前选中的任务为 null
       if (this.selectedProject) {
         console.log(this.selectedProject);
-        
-        this.getSubproject().then(() => {
-          this.allTasks = this.subprojectList.map(project => ({
-            id: project.subprojectId,
-            name: project.subprojectName,
-            status: project.subStatus === "1" ? 'To Do' :
-              project.subStatus === "2" ? 'In Progress' :
-                project.subStatus === "3" ? 'Done' : 'Unknown'
-          }));
-          console.log(this.allTasks);
-        });
+
+        // 发起请求并等待完成
+        Promise.all([
+          this.getSubproject()  // 发起 subproject 请求
+        ])
+          .then(() => {
+            // 请求成功，生成任务列表
+            this.allTasks = [];
+            this.allTasks = this.subprojectList.map(project => ({
+              id: project.subprojectId,
+              name: project.subprojectName,
+              status: project.subStatus === "1" ? 'To Do' :
+                project.subStatus === "2" ? 'In Progress' :
+                  project.subStatus === "3" ? 'Done' : 'Unknown'
+            }));
+            console.log("all task:",this.allTasks);
+          })
+          .catch(error => {
+            // 错误处理
+            console.error("Error loading tasks:", error);
+          });
       }
     },
-
     getSubproject() {
       this.querySubParams.projectId = this.selectedProject;
-      listSubproject(this.querySubParams).then(response => {
-        console.log(response.rows)
+      return listSubproject(this.querySubParams).then(response => {
         this.subprojectList = response.rows;
-        console.log("subproject list",this.subprojectList);
+        console.log("subproject list", this.subprojectList);
+      }).catch(error => {
+        console.error("Error fetching subprojects:", error);
       });
     },
     // 选择任务
