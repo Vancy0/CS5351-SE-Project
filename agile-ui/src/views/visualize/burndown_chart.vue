@@ -74,25 +74,34 @@ export default {
     },
     // 选择项目后加载燃尽图数据
     loadBurndownChart() {
-      if (this.selectedProject){
+    if (this.selectedProject) {
         console.log(this.selectedProject);
-        getExpectedLine(this.selectedProject).then(response =>{
-          this.expectedLine = response.rows;
-          console.log("expected line data:",this.expectedLine)
+
+        // 发起两个请求，等待两个请求都完成后执行后续代码
+        Promise.all([
+          getExpectedLine(this.selectedProject),
+          getActualLine(this.selectedProject)
+        ])
+        .then(([expectedResponse, actualResponse]) => {
+          // 请求成功，设置数据
+          this.expectedLine = expectedResponse.data;
+          this.actualLine = actualResponse.data;
+          console.log("expected line data:", this.expectedLine);
+          console.log("actual line data:", this.actualLine);
+        
+          // 数据加载完后生成 burndownData
+          this.burndownData = this.getBurndownData();
+        })
+        .catch(error => {
+          // 错误处理
+          console.error("Error loading burndown data:", error);
         });
-        getActualLine(this.selectedProject).then(response =>{
-          this.actualLine = response.rows;
-          console.log("actual line data:",this.actualLine)
-        });
-        this.burndownData = this.getBurndownData();
       }
-
     },
-
     getBurndownData() {
       // 生成横坐标数组
       const dates = this.expectedLine.map((_, index) => index);
-          
+      console.log("date is:",dates);
       // 返回格式化的数据对象
       const burndownData = {
         dates: dates,  // 横坐标
