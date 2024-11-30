@@ -37,7 +37,7 @@ public class AgileSubprojectController extends BaseController
     /**
      * 查询子系统列表
      */
-    @PreAuthorize("@ss.hasPermi('project:subproject:list')")
+//    @PreAuthorize("@ss.hasPermi('project:subproject:list')")
     @GetMapping("/list")
     public TableDataInfo list(AgileSubproject agileSubproject)
     {
@@ -49,7 +49,7 @@ public class AgileSubprojectController extends BaseController
     /**
      * 导出子系统列表
      */
-    @PreAuthorize("@ss.hasPermi('project:subproject:export')")
+
     @Log(title = "子系统", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, AgileSubproject agileSubproject)
@@ -62,7 +62,7 @@ public class AgileSubprojectController extends BaseController
     /**
      * 获取子系统详细信息
      */
-    @PreAuthorize("@ss.hasPermi('project:subproject:query')")
+
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class AgileSubprojectController extends BaseController
     /**
      * 新增子系统
      */
-    @PreAuthorize("@ss.hasPermi('project:subproject:add')")
+
     @Log(title = "子系统", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody AgileSubproject agileSubproject)
@@ -83,7 +83,7 @@ public class AgileSubprojectController extends BaseController
     /**
      * 修改子系统
      */
-    @PreAuthorize("@ss.hasPermi('project:subproject:edit')")
+
     @Log(title = "子系统", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody AgileSubproject agileSubproject)
@@ -94,7 +94,7 @@ public class AgileSubprojectController extends BaseController
     /**
      * 删除子系统
      */
-    @PreAuthorize("@ss.hasPermi('project:subproject:remove')")
+
     @Log(title = "子系统", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

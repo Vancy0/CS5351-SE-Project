@@ -37,7 +37,7 @@ public class AgileProjectController extends BaseController
     /**
      * 查询项目列表
      */
-    @PreAuthorize("@ss.hasPermi('system:project:list')")
+//    @PreAuthorize("@ss.hasPermi('system:project:list')")
     @GetMapping("/list")
     public TableDataInfo list(AgileProject agileProject)
     {
@@ -49,7 +49,7 @@ public class AgileProjectController extends BaseController
     /**
      * 导出项目列表
      */
-    @PreAuthorize("@ss.hasPermi('system:project:export')")
+
     @Log(title = "项目", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, AgileProject agileProject)
@@ -62,7 +62,7 @@ public class AgileProjectController extends BaseController
     /**
      * 获取项目详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:project:query')")
+
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class AgileProjectController extends BaseController
     /**
      * 新增项目
      */
-    @PreAuthorize("@ss.hasPermi('system:project:add')")
+
     @Log(title = "项目", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody AgileProject agileProject)
@@ -83,7 +83,7 @@ public class AgileProjectController extends BaseController
     /**
      * 修改项目
      */
-    @PreAuthorize("@ss.hasPermi('system:project:edit')")
+
     @Log(title = "项目", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody AgileProject agileProject)
@@ -94,7 +94,7 @@ public class AgileProjectController extends BaseController
     /**
      * 删除项目
      */
-    @PreAuthorize("@ss.hasPermi('system:project:remove')")
+
     @Log(title = "项目", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
