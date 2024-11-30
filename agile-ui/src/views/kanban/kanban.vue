@@ -188,6 +188,7 @@ body {
     linear-gradient(315deg, #ebd16555 25%, transparent 25%) 0px 0/ 20px 20px,
     linear-gradient(45deg, #ebd165 25%, #96a039 25%) 0px 0/ 20px 20px;
   background-size: cover;
+  overflow-y: auto;      /* 启用垂直滚动 */
   /* 背景按比例缩放，避免有空白 */
 }
 
@@ -205,6 +206,11 @@ body {
   width: 300px;
   margin-bottom: 20px;
 }
+
+/* .task-board {
+  display: flex;
+  gap: 20px;
+} */
 
 .task-board {
   display: flex;
@@ -224,13 +230,16 @@ body {
 }
 
 .task-item {
-  padding: 10px;
+  display: flex;          /* 使用 flexbox 布局 */
+  align-items: center;    /* 垂直居中对齐 */
+  padding: 3px;           /* 内边距保持小一些 */
   background-color: #f4f4f4;
   border-radius: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
   cursor: pointer;
   position: relative;
   z-index: 10;
+  height: 60px;           /* 设置较小的固定高度 */
 }
 
 .task-item:hover {

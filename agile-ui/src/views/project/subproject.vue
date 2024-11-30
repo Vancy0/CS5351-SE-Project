@@ -39,7 +39,6 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['project:subproject:add']"
         >Add</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -50,7 +49,6 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['project:subproject:edit']"
         >Edit</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -61,7 +59,6 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['project:subproject:remove']"
         >Delete</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -71,7 +68,6 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['project:subproject:export']"
         >Export</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
