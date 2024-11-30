@@ -3,7 +3,7 @@
     <div class="kanban-title">
       <el-row>
         <el-col :span="24">
-          <h1 style="color">Kanban</h1>
+          <h1 style="color">Task Board</h1>
         </el-col>
       </el-row>
     </div>
@@ -65,19 +65,19 @@ export default {
       ],
       // 当前选中的项目
       selectedProject: null,
-      taskStatuses: ['Backlog', 'In Progress', 'Completed'],
+      taskStatuses: ['To Do', 'In Progress', 'Done'], // 改为 "To Do", "In Progress", "Done"
       // 模拟的任务数据，按项目组织
       allTasks: {
         1: [  // Project A
-          { id: 1, title: 'Task 1', description: 'This is the first task', status: 'Backlog', priority: 'High' },
+          { id: 1, title: 'Task 1', description: 'This is the first task', status: 'To Do', priority: 'High' },
           { id: 2, title: 'Task 2', description: 'This is the second task', status: 'In Progress', priority: 'Medium' },
         ],
         2: [  // Project B
-          { id: 3, title: 'Task 3', description: 'This is the third task', status: 'Completed', priority: 'Low' },
-          { id: 4, title: 'Task 4', description: 'This is the fourth task', status: 'Backlog', priority: 'High' },
+          { id: 3, title: 'Task 3', description: 'This is the third task', status: 'Done', priority: 'Low' },
+          { id: 4, title: 'Task 4', description: 'This is the fourth task', status: 'To Do', priority: 'High' },
         ],
         3: [  // Project C
-          { id: 5, title: 'Task 5', description: 'This is the fifth task', status: 'Backlog', priority: 'Low' },
+          { id: 5, title: 'Task 5', description: 'This is the fifth task', status: 'To Do', priority: 'Low' },
           { id: 6, title: 'Task 6', description: 'This is the sixth task', status: 'In Progress', priority: 'High' },
         ]
       },
