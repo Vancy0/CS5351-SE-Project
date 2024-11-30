@@ -132,11 +132,36 @@
         <el-form-item label="Project Name" prop="projectName">
           <el-input v-model="form.projectName" placeholder="Please enter project name" />
         </el-form-item>
+
+        <el-form-item prop="status">
+          <template #label>
+            Project Status
+            <!-- Tooltip for detailed description, placed next to label -->
+            <el-tooltip class="item" effect="dark" content="1: In Progress, 2: On Hold, 3: Completed" placement="top-start">
+              <el-button type="text" icon="el-icon-info" size="mini" style="padding: 0; margin-left: 5px;"></el-button>
+            </el-tooltip>
+          </template>
+          <el-select v-model="form.status" placeholder="Select status">
+            <el-option label="In Progress" value="1"></el-option>
+            <el-option label="On Hold" value="2"></el-option>
+            <el-option label="Completed" value="3"></el-option>
+          </el-select>
+        </el-form-item>
+
+
         <el-form-item label="Manager ID" prop="managerId">
           <el-input v-model="form.managerId" placeholder="Please enter manager ID" />
         </el-form-item>
         <el-form-item label="Manager Name" prop="managerName">
           <el-input v-model="form.managerName" placeholder="Please enter manager name" />
+        </el-form-item>
+        <el-form-item label="Approval Time" prop="verifyTime">
+          <el-date-picker clearable
+                          v-model="form.verifyTime"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="Please select approval time">
+          </el-date-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -190,6 +215,9 @@ export default {
         ],
         managerName: [
           { required: true, message: "Manager name cannot be empty", trigger: "blur" }
+        ],
+        status: [
+          { required: true, message: "status cannot be empty", trigger: "blur" }
         ],
       }
     };

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch">
       <el-form-item label="Project ID" prop="projectId">
         <el-input
           v-model="queryParams.projectId"
@@ -119,7 +119,7 @@
 
     <!-- Add or Edit Subproject Dialog -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="150px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="170px">
         <el-form-item label="Project ID" prop="projectId">
           <el-input v-model="form.projectId" placeholder="Please enter project ID" />
         </el-form-item>
@@ -128,6 +128,20 @@
         </el-form-item>
         <el-form-item label="Subproject Name" prop="subprojectName">
           <el-input v-model="form.subprojectName" placeholder="Please enter subproject name" />
+        </el-form-item>
+        <el-form-item prop="subStatus">
+          <template #label>
+            SubProject Status
+            <!-- Tooltip for detailed description, placed next to label -->
+            <el-tooltip class="item" effect="dark" content="1: In Progress, 2: On Hold, 3: Completed" placement="top-start">
+              <el-button type="text" icon="el-icon-info" size="mini" style="padding: 0; margin-left: 5px;"></el-button>
+            </el-tooltip>
+          </template>
+          <el-select v-model="form.subStatus" placeholder="Select status">
+            <el-option label="In Progress" value="1"></el-option>
+            <el-option label="On Hold" value="2"></el-option>
+            <el-option label="Completed" value="3"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="Approval Time" prop="verifyTime">
           <el-date-picker clearable
@@ -195,10 +209,13 @@ export default {
       // 表单校验
       rules: {
         subprojectId: [
-          { required: true, message: "子项目id不能为空", trigger: "blur" }
+          { required: true, message: "Subproject id cannot be empty", trigger: "blur" }
         ],
         subprojectName: [
-          { required: true, message: "子项目名字不能为空", trigger: "blur" }
+          { required: true, message: "Subproject name cannot be empty", trigger: "blur" }
+        ],
+        subStatus: [
+          { required: true, message: "Status id cannot be empty", trigger: "blur" }
         ],
       }
     };
