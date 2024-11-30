@@ -48,6 +48,10 @@ public class AgileProject extends BaseEntity
     /** 删除标记，0正常，1删除 */
     private String delFlag;
 
+    private Integer currentCycle;
+
+    private Integer totalCycle;
+
     public void setId(Long id) 
     {
         this.id = id;
@@ -121,6 +125,24 @@ public class AgileProject extends BaseEntity
         return delFlag;
     }
 
+    public Integer getCurrentCycle() {
+        return currentCycle;
+    }
+
+    public void setCurrentCycle(Integer currentCycle) {
+        this.currentCycle = currentCycle;
+    }
+
+    public Integer getTotalCycle() {
+        return totalCycle;
+    }
+
+    public void setTotalCycle(Integer totalCycle) {
+        this.totalCycle = totalCycle;
+    }
+
+
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -136,6 +158,8 @@ public class AgileProject extends BaseEntity
             .append("verifyTime", getVerifyTime())
             .append("updateBy", getUpdateBy())
             .append("delFlag", getDelFlag())
+            .append("currentCycle", getCurrentCycle())
+            .append("totalCycle", getTotalCycle())
             .toString();
     }
 }

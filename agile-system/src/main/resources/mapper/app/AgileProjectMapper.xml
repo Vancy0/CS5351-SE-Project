@@ -17,10 +17,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="verifyTime"    column="verify_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="delFlag"    column="del_flag"    />
+        <result property="currentCycle"    column="current_cycle"    />
+        <result property="totalCycle"    column="total_cycle"    />
     </resultMap>
 
     <sql id="selectAgileProjectVo">
-        select id, project_id, project_name, status, manager_id, manager_name, create_time, create_by, update_time, verify_time, update_by, del_flag from agile_project
+        select id, project_id, project_name, status, manager_id, manager_name, create_time, create_by, update_time, verify_time, update_by, del_flag, current_cycle, total_cycle from agile_project
     </sql>
 
     <select id="selectAgileProjectList" parameterType="AgileProject" resultMap="AgileProjectResult">
@@ -51,6 +53,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="verifyTime != null">verify_time,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="delFlag != null">del_flag,</if>
+            <if test="currentCycle != null">current_cycle,</if>
+            <if test="totalCycle != null">total_cycle,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="projectId != null">#{projectId},</if>
@@ -64,6 +68,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="verifyTime != null">#{verifyTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="delFlag != null">#{delFlag},</if>
+            <if test="currentCycle != null">#{currentCycle},</if>
+            <if test="totalCycle != null">#{totalCycle},</if>
          </trim>
     </insert>
 
@@ -81,6 +87,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="verifyTime != null">verify_time = #{verifyTime},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="currentCycle != null">current_cycle = #{currentCycle},</if>
+            <if test="totalCycle != null">total_cycle = #{totalCycle},</if>
         </trim>
         where id = #{id}
     </update>
